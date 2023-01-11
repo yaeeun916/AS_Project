@@ -129,4 +129,13 @@ dmypy.json
 .pyre/
 
 
-.iml
+*.iml
+*.png
+/data/CRC/
+sortedCOAD_backup/
+saved/log/*
+saved/models/*
+saved/data_info/*
+.idea
+.vscode
+.devcontainer

@@ -1,0 +1,52 @@
+{
+    "name": "CRC_Densenet121",
+    "n_gpu": 3,
+    "arch": {
+        "type": "Densenet121",
+        "args": {
+            "fc_num": 1,
+            "dropout": 0.5
+        }
+    },
+    "data_loader": {
+        "type": "CrcTileDataLoader",
+        "args":{
+            "AS_low_thresh": 1,
+            "AS_high_thresh": 25,
+            "MSIstat": "MSS+MSIMUT",
+            "tilenum_thresh": 10,
+            "batch_size": 128,
+            "shuffle": true,
+            "transform": true,
+            "validation_split": 0.15,
+            "num_workers": 2
+        }
+    },
+    "data": {
+        "type": "CRC",
+        "data_dir": "data/",
+        "data_info_dir": "saved/data_info",
+        "sample_df_fname": "sample_df.csv",
+        "tile_df_fname": "tile_df.csv"
+    },
+    "optimizer": {
+        "type": "Adam",
+        "args":{
+            "lr": 0.001,
+            "weight_decay": 0
+        }
+    },
+    "loss": "bce_with_logits",
+    "metrics": [
+        "accuracy"
+    ],
+    "trainer": {
+        "epochs": 100,
+        "save_dir": "saved/",
+        "save_period": 1,
+        "verbosity": 2,        
+        "monitor": "min val_loss",
+        "early_stop": 30,
+        "tensorboard": true
+    }
+}
