@@ -7,7 +7,7 @@ This code is a customized version of victoresque’s pytorch-template. Check <ht
 ## 1. Prepare Dataset
 
 * Before running prepare.py, tile dataset zip file must be located at `data_zip_path` (check prepare.py), and TCGA AS label file must be located in `data_info_dir/type` (check config.json)
-* Dataset used in this project is JN Kather's Histological images for MSI vs. MSS classification in gastrointestinal cancer, FFPE samples[1], with additional manual removing of non-tumor tiles by pathologist Dr. Younghoon Kim at Catholic University of Korea Seoul St. Mary's Hospital. Only images from colorectal cancer were used.
+* Dataset used in this project is JN Kather's Histological images for MSI vs. MSS classification in gastrointestinal cancer, FFPE samples[1], with additional manual removal of non-tumor tiles by pathologist Dr. Younghoon Kim at Catholic University of Korea Seoul St. Mary's Hospital. Only images from colorectal cancer were used.
 
 
 * Run prepare.py (required only once)
