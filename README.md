@@ -74,6 +74,8 @@ This code is a customized version of victoresque’s pytorch-template. Check <ht
 
 ## 3. Test and Evaluate
 * You can test the trained model by running `test.py` passing path to the trained checkpoint by `--resume` argument.
+
+
   ```
   python test.py -c {save_dir/models/name/timestamp/config.json} --resume {save_dir/models/name/timestamp/model_best.pth}
   ```
