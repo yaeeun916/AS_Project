@@ -114,8 +114,8 @@ def main(config):
     tile_result = {
         'Tile_Path' : tile_paths,
         'Tile_Prob' : tile_probs.squeeze(),
-        'Tile_Pred' : tile_preds.squeeze(),
-        'Tile_Label' : tile_labels.squeeze()
+        'Tile_Pred' : tile_preds.astype(int).squeeze(),
+        'Tile_Label' : tile_labels.astype(int).squeeze()
     }
     tile_result = pd.DataFrame(tile_result)
     tile_result = pd.merge(tile_result, tile_df, left_on='Tile_Path', right_on='Path', how='left')
@@ -127,13 +127,14 @@ def main(config):
     votes = []
     sample_labels = []
     img_per_sample = []
+    tile_labels = tile_labels.squeeze()
 
     for barcode in barcodes:
         mask = [barcode in path for path in tile_paths]
 
         pred_0 = np.sum(tile_preds[mask] == 0)
         pred_1 = np.sum(tile_preds[mask] == 1)
-        label = tile_labels[mask][0]
+        label = tile_labels[mask].item(0)
 
         sample_labels.append(label)
         votes.append(pred_1 / (pred_0 + pred_1))
@@ -182,7 +183,7 @@ def main(config):
         'Tile_Num' : img_per_sample,
         'Votes' : votes,
         'Pred' : sample_preds,
-        'True_Label' : sample_labels
+        'True_Label' : [int(i) for i in sample_labels]
     }
     sample_result = pd.DataFrame(sample_result)
     sample_result = pd.merge(sample_result, sample_df[['Barcode', 'AS_Label', 'Type', 'MSI_status']], left_on='Barcode', right_on='Barcode', how='left')
@@ -191,7 +192,7 @@ def main(config):
 
     # log each sample
     for index, row in sample_result.iterrows():
-        logger.info('barcode : {};\t # tiles : {:5d};\t votes : {:.4f};\t label : {:2d};\t AS : {:2d};'.format(row['Barcode'], row['Tile_Num'], row['Votes'], row['True_Label'], row['AS_Label']))
+        logger.info('barcode : {};\t # tiles : {:5d};\t votes : {:.4f};\t pred : {:2d};\t label : {:2d};\t AS : {:2d};'.format(row['Barcode'], row['Tile_Num'], row['Votes'], row['Pred'], row['True_Label'], row['AS_Label']))
 
 
 if __name__ == '__main__':

@@ -224,15 +224,14 @@ def scatterplot_scores(score_name, scores, labels, thresh_opt=None):
 def histplot_results(tile_results, sample_results, log_dir):
     tileprob_per_AS(tile_results, log_dir)
     tileprob_per_sample(tile_results, log_dir)
-    tileprob_per_pred(tile_results, log_dir)
-    AS_per_pred(sample_results, log_dir)
+    tileprob_per_pred(tile_results, sample_results, log_dir)
 
 # plot and save Tile_Prob histogram
 def tileprob_per_AS(tile_results, log_dir):
     # hue by AS
     fig1, ax1 = plt.subplots()
     fig1.set_size_inches(15, 8)
-    sns.histplot(data=tile_results[['Tile_Prob', 'AS_Label']], x='Tile_Prob', hue='AS_Label', kde=True, ax=ax)
+    sns.histplot(data=tile_results, x='Tile_Prob', hue='AS_Label', kde=True, ax=ax1)
     ax1.set_title('Distribution of Tile-level Probability', fontsize='xx-large')
     ax1.set_xlabel('Tile-level Probability', fontsize='xx-large')
     ax1.set_ylabel('Count', fontsize='xx-large')
@@ -284,13 +283,14 @@ def tileprob_per_sample(tile_results, log_dir):
     fig.savefig(log_dir / 'Tile_Prob Histogram per Sample.png')
 
 # plot and save Tile_Prob histogram of correctly / incorrectly predicted samples
-def tileprob_per_pred(tile_results, log_dir):
+def tileprob_per_pred(tile_results, sample_results, log_dir):
     # 2 subplots per AS - correctly / incorrectly predicted samples
     # hue by sample
-    AS_list = tile_results.AS_Label.unique()
+    merged_df = pd.merge(tile_results, sample_results[['Barcode', 'Pred']],  how='left', left_on=['Barcode'], right_on = ['Barcode'])
+    AS_list = merged_df.AS_Label.unique()
     fig, axes = plt.subplots(len(AS_list), 2, figsize=(15, len(AS_list) * 4))
     for i, AS in enumerate(AS_list):
-        corrects = tile_results.loc[(tile_results['AS_Label'] == AS) & (tile_results['Tile_Pred'] == tile_results['Tile_Label'])]
+        corrects = merged_df.loc[(merged_df['AS_Label'] == AS) & (merged_df['Pred'] == merged_df['Tile_Label'])]
         ax1 = axes[i][0]
         sns.histplot(data=corrects, x='Tile_Prob', kde=True, hue='Barcode', ax=ax1)
         ax1.set_title(f'Correct Samples (AS : {AS})', fontsize='x-large')
@@ -299,7 +299,7 @@ def tileprob_per_pred(tile_results, log_dir):
         ax1.tick_params(axis='both', which='major', labelsize='medium')
         ax1.set(xlim=(0.0, 1.0))
 
-        incorrects = tile_results.loc[(tile_results['AS_Label'] == AS) & (tile_results['Tile_Pred'] != tile_results['Tile_Label'])]
+        incorrects = merged_df.loc[(merged_df['AS_Label'] == AS) & (merged_df['Pred'] != merged_df['Tile_Label'])]
         ax2 = axes[i][1]
         sns.histplot(data=incorrects, x='Tile_Prob', kde=True, hue='Barcode', ax=ax2)
         ax2.set_title(f'Incorrect Samples (AS : {AS})', fontsize='x-large')
@@ -308,24 +308,4 @@ def tileprob_per_pred(tile_results, log_dir):
         ax2.tick_params(axis='both', which='major', labelsize='medium')   
         ax2.set(xlim=(0.0, 1.0))
     fig.tight_layout()
-    fig.savefig(log_dir / 'Tile_Prob Histogram of Correctly / Incorrectly Predicted Samples.png')
-
-# plot and save AS histogram of correctly / incorrectly predicted samples
-def AS_per_pred(sample_results, log_dir):
-    corrects = sample_results.loc[sample_results['Pred']==sample_results['True_Label']]
-    fig, axes = plt.subplots(2)
-    sns.countplot(ax=axes[0], x='AS_Label', data=corrects, hue='True_Label')
-    axes[0].set_title('AS Histogram of Correctly Predicted Samples')
-    axes[0].set_xlabel('Aneuploidy Score')
-    axes[0].set_ylabel('Sample Count')
-    axes[0].legend()
-
-    incorrects = sample_results.loc[sample_results['Pred']!=sample_results['True_Label']]
-    sns.countplot(ax=axes[1], x='AS_Label', data=incorrects, hue='True_Label')
-    axes[1].set_title('AS Histogram of Incorrectly Predicted Samples')
-    axes[1].set_xlabel('Aneuploidy Score')
-    axes[1].set_ylabel('Sample Count')
-    axes[1].legend()
-
-    fig.tight_layout()
-    fig.savefig(log_dir / 'AS histogram of Correctly / Incorrectly Predicted Samples.png')
+    fig.savefig(log_dir / 'Tile_Prob Histogram per Prediction.png')
