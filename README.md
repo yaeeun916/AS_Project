@@ -69,6 +69,8 @@ This code is a customized version of victoresque’s pytorch-template. Check <ht
       CustomArgs(['--dtype'], type=str, target='data;type')
   ]
   ```
+* AS 0 tiles are excluded by default. To include AS 0 tiles, edit CrcTileDataLoader in data_loaders.py.
+
 * Using bash shell script programming would be convenient for running combinations of experiments. Modify name of the training session in config files to easily distinguish experiments. 
   
 
