@@ -79,7 +79,6 @@ This code is a customized version of victoresque’s pytorch-template. Check <ht
   ```
   python test.py -c {save_dir/models/name/timestamp/config.json} --resume {save_dir/models/name/timestamp/model_best.pth}
   ```
-* Use `visualize.ipynb` for visualization of the results.
 
 
 ## References
