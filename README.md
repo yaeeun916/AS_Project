@@ -84,5 +84,7 @@ This code is a customized version of victoresque’s pytorch-template. Check <ht
 
 ## References
 [1]Taylor, Alison M., et al. "Genomic and functional approaches to understanding cancer aneuploidy." Cancer cell 33.4 (2018): 676-689.
+
+
 [2] Kather, Jakob Nikolas. (2019). Histological images for MSI vs. MSS classification in gastrointestinal cancer, FFPE samples [Data set]. Zenodo. https://doi.org/10.5281/zenodo.2530835
 
