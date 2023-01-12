@@ -10,7 +10,7 @@ import model.loss as module_loss
 import model.metric as module_metric
 import model.model as module_arch
 from parse_config import ConfigParser
-from utils import plot_confusion_matrix, plot_roc, scatterplot_scores
+from utils import plot_confusion_matrix, plot_roc, scatterplot_scores, histplot_results
 
 
 def main(config):
@@ -113,13 +113,13 @@ def main(config):
     # save results
     tile_result = {
         'Tile_Path' : tile_paths,
-        'Tile_Pred' : tile_preds.squeeze(),
         'Tile_Prob' : tile_probs.squeeze(),
+        'Tile_Pred' : tile_preds.squeeze(),
         'Tile_Label' : tile_labels.squeeze()
     }
     tile_result = pd.DataFrame(tile_result)
     tile_result = pd.merge(tile_result, tile_df, left_on='Tile_Path', right_on='Path', how='left')
-    tile_result.to_csv(log_dir / 'tile_data.csv', index=False)
+    tile_result.to_csv(log_dir / 'tile_result.csv', index=False)
 
 
     # 2. sample-level evaluation
@@ -186,7 +186,8 @@ def main(config):
     }
     sample_result = pd.DataFrame(sample_result)
     sample_result = pd.merge(sample_result, sample_df[['Barcode', 'AS_Label', 'Type', 'MSI_status']], left_on='Barcode', right_on='Barcode', how='left')
-    sample_result.to_csv(log_dir / 'sample_data.csv', index=False)
+    sample_result.to_csv(log_dir / 'sample_result.csv', index=False)
+    histplot_results(tile_result, sample_result, log_dir)
 
     # log each sample
     for index, row in sample_result.iterrows():

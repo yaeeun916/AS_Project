@@ -3,8 +3,6 @@ import torch.nn.functional as F
 def nll_loss(output, target):
     return F.nll_loss(output, target)
 
-# binary cross entropy with logits
-# : combines Sigmoid layer and BCE loss - more numerically stable than using them separately
 def bce_with_logits(output, target, pos_weight=None):
     return F.binary_cross_entropy_with_logits(output, target, pos_weight=pos_weight)
 
