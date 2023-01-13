@@ -198,7 +198,6 @@ def plot_roc(fpr, tpr, roc_auc, opt_idx, thresh_opt):
 
     return figure
 
-# annotate AS
 def scatterplot_scores(score_name, scores, labels, thresh_opt=None):
     fig, ax = plt.subplots(figsize=(12, 3))
     scatter = ax.scatter(scores, np.zeros_like(scores), c=labels)
