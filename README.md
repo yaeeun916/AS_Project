@@ -73,7 +73,7 @@ This code is a customized version of victoresque’s pytorch-template. Check <ht
 
 * This template supports Tensorboard visualization. In addition to the original template, this customized version logs the confusion matrix of train and validation every epoch. Check <https://github.com/victoresque/pytorch-template> for more detail on Tensorboard.
 
-* Using bash shell script programming would be convenient for running combinations of experiments. Modify name of the training session in config files to easily distinguish experiments. 
+* Using bash shell script programming would be convenient for running combinations of experiments. Modify name of the training session in config files to easily distinguish the experiments. 
   
 
 ## 3. Test and Evaluate
