@@ -219,7 +219,7 @@ class CrcTrainer(BaseTrainer):
         self.model.train()
         self.train_metrics.reset()
 
-        # preds and labels for entire train set after training 1 epoch
+        # preds and labels for the entire train set after training 1 epoch
         tile_preds = []
         tile_probs = []
         tile_labels = []
@@ -265,7 +265,7 @@ class CrcTrainer(BaseTrainer):
         self.writer.add_scalar('auroc', auroc, global_step=epoch)
 
         # add confusion matrix to tensorboard every epoch (not per step)
-        # labels are set for binary classification
+        # labels=[0, 1] is set for binary classification - change for multi-class classification
         cm = confusion_matrix(tile_labels, tile_preds, labels=[0, 1])
         cm_fig = plot_confusion_matrix(cm, [0, 1])
         self.writer.add_figure('confusion_matrix', cm_fig, global_step=epoch)
