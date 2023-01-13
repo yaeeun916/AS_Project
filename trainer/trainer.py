@@ -148,6 +148,7 @@ class CrcTrainer(BaseTrainer):
     # - log metrics of best model at the end of training
     # - log only trainable parameters
     # - doesn't add input images to tensorboard writer
+    # - adds confusion matrix of train and val to tensorboard writer every epoch
     def train(self):
         """
         Full training logic

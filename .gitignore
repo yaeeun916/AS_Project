@@ -135,7 +135,6 @@ dmypy.json
 sortedCOAD_backup/
 saved/log/*
 saved/models/*
-saved/data_info/*
 .idea
 .vscode
 .devcontainer
