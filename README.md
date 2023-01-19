@@ -82,7 +82,7 @@ This code is a customized version of victoresque’s pytorch-template. Check <ht
 
   ```
   # save_dir/models/name/timestamp of the training session
-  python test.py -c {save_dir/models/name/timestamp/config.json} --resume {save_dir/models/name/timestamp/model_best.pth} --dtype {cancer type}
+  python test.py -c {save_dir/models/name/timestamp/config.json} --resume {save_dir/models/name/timestamp/model_best.pth}
   ```
   
 * The summarize dataframes and visualizations of both the tile-level and sample-level results will be saved in `save_dir/log/name/timestamp` of the test session.
