@@ -241,6 +241,7 @@ def tileprob_per_AS(tile_results, log_dir):
 
     # 1 subplot per AS
     AS_list = tile_results.AS_Label.unique()
+    AS_list.sort()
     rows = len(AS_list) // 3 if (len(AS_list) % 3 == 0) else len(AS_list) // 3 + 1
     cols = 3
     fig2, axes2 = plt.subplots(rows, cols, figsize=(cols * 5, rows * 3))
@@ -263,6 +264,7 @@ def tileprob_per_AS(tile_results, log_dir):
 def tileprob_per_sample(tile_results, log_dir):
     # 1 subplot per AS, hue by sample
     AS_list = tile_results.AS_Label.unique()
+    AS_list.sort()
     rows = len(AS_list) // 3 if (len(AS_list) % 3 == 0) else len(AS_list) // 3 + 1
     cols = 3
     fig, axes = plt.subplots(rows, cols, figsize=(cols * 5, rows * 3))
@@ -287,6 +289,7 @@ def tileprob_per_pred(tile_results, sample_results, log_dir):
     # hue by sample
     merged_df = pd.merge(tile_results, sample_results[['Barcode', 'Pred']],  how='left', left_on=['Barcode'], right_on = ['Barcode'])
     AS_list = merged_df.AS_Label.unique()
+    AS_list.sort()
     fig, axes = plt.subplots(len(AS_list), 2, figsize=(15, len(AS_list) * 4))
     for i, AS in enumerate(AS_list):
         corrects = merged_df.loc[(merged_df['AS_Label'] == AS) & (merged_df['Pred'] == merged_df['Tile_Label'])]
