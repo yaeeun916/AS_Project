@@ -73,7 +73,7 @@ This code is a customized version of victoresque’s pytorch-template. Check <ht
 
 * This template supports Tensorboard visualization. In addition to the original template, this customized version logs the confusion matrix of train and validation every epoch. Check <https://github.com/victoresque/pytorch-template> for more detail on Tensorboard.
 
-* Using bash shell script programming would be convenient for running combinations of experiments. Modify name of the training session in config files to easily distinguish experiments. 
+* Using bash shell script programming would be convenient for running combinations of experiments. Modify name of the training session in config files to easily distinguish the experiments. 
   
 
 ## 3. Test and Evaluate
@@ -85,7 +85,7 @@ This code is a customized version of victoresque’s pytorch-template. Check <ht
   python test.py -c {save_dir/models/name/timestamp/config.json} --resume {save_dir/models/name/timestamp/model_best.pth}
   ```
   
-* The summarize dataframes and visualizations of the results will be saved in `save_dir/log/name/timestamp` of the test session.
+* The summarize dataframes and visualizations of both the tile-level and sample-level results will be saved in `save_dir/log/name/timestamp` of the test session.
 
 
 ## References
